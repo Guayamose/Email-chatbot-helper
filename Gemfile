@@ -73,3 +73,7 @@ group :test do
   gem "selenium-webdriver"
 end
   gem 'devise'
+ gem "devise", "~> 4.9"
+gem "bcrypt", "~> 3.1"   # Devise needs this for database_authenticatable
+# Optional (silence Ruby 3.5 ostruct warning during build)
+gem "ostruct" 
