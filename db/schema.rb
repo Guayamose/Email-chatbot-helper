@@ -10,9 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_18_082618) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_18_083845) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "chats", force: :cascade do |t|
+    t.string "title"
+    t.string "politeness_level"
+    t.string "receiver"
+    t.string "subject"
+    t.bigint "users_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["users_id"], name: "index_chats_on_users_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string "content"
+    t.string "who_sent"
+    t.bigint "chats_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chats_id"], name: "index_messages_on_chats_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +46,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_18_082618) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "chats", "users", column: "users_id"
+  add_foreign_key "messages", "chats", column: "chats_id"
 end
