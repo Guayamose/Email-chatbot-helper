@@ -14,7 +14,9 @@ class ChatsController < ApplicationController
   end
 
   def show
+    @chats = Chat.all
     @chat = Chat.find(params[:id])
+    @messages = @chat.messages
   end
 
   private
@@ -22,5 +24,4 @@ class ChatsController < ApplicationController
   def chat_params
     params.require(:chat).permit(:title, :receiver, :subject)
   end
-  
 end
