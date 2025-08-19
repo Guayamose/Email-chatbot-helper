@@ -1,6 +1,8 @@
 class Chat < ApplicationRecord
-  belongs_to :users, :politenesses
-  has_many :messages
+  belongs_to :user
+  belongs_to :politeness
+
+  has_many :messages, dependent: :destroy
 
   validates :politeness_id, :receiver, :subject, presence: true
 end
