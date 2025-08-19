@@ -1,3 +1,5 @@
+<div class="box mt-5 m-4 w-50 mx-auto h-100 rounded-5 p-5">
+<div class=" mx-auto w-75">
 <h2>Log in</h2>
 
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -5,16 +7,18 @@
     <%= f.input :email,
                 required: false,
                 autofocus: true,
-                input_html: { autocomplete: "email" } %>
+                input_html: { placeholder: "Email", autocomplete: "email", class: "pill-input" } %>
     <%= f.input :password,
                 required: false,
-                input_html: { autocomplete: "current-password" } %>
+                input_html: { placeholder: "current-password", autocomplete: "current-password", class: "pill-input" } %>
     <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
+    <%= f.button :submit, "Log in", class: "btn btn-dark rounded-5 mt-3 w-100 mb-3" %>
   </div>
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>
+</div>
