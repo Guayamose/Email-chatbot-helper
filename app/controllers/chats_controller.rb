@@ -21,6 +21,7 @@ class ChatsController < ApplicationController
     @chats = Chat.all
     @chat = Chat.find(params[:id])
     @messages = @chat.messages
+    @message = Message.new
   end
 
   private

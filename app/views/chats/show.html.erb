@@ -36,8 +36,12 @@
       <div class="bg-primary" style="height:50px">
       </div>
       <div class="send-button">
-        <%= link_to '#' do %>
-          <i class="fa-regular fa-paper-plane"></i>
+        <%= simple_form_for [@chat, @message], method: :post do |f| %>
+          <%= f.hidden_field :who_sent, value: "user" %>
+          <%= f.input :content, as: :text, label: "Message" %>
+          <%= f.submit do %>
+            <i class="fa-regular fa-paper-plane"></i>
+          <% end %>
         <% end %>
       </div>
     </div>
