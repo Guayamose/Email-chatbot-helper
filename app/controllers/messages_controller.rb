@@ -26,7 +26,6 @@ class MessagesController < ApplicationController
       else
         return render 'chats/show', status: :unprocessable_content
       end
-
       redirect_to chat_path(@chat)
     else
       render 'chats/show', status: :unprocessable_content
