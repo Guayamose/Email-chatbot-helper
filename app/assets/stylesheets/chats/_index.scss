@@ -1,0 +1,21 @@
+.chats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem auto;
+}
+
+.chats-list {
+  list-style: none;
+  padding: 0;
+}
+.chats-cards {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  border: 1px solid black;
+  margin: 1rem auto;
+  text-decoration: none;
+  list-style: none;
+  border-radius: 1rem;
+}

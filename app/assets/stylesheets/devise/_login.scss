@@ -1,20 +1,13 @@
 .box {
-    background-color: #344e4152;
+    background-color: #e3e7ef;
     color: #2E2F30;
     text-align: center;
     font-family: arial, sans-serif;
-    margin-top: 8rem !important;
-
+    margin: 0;
   }
   .form-inputs {
     display: grid;
     gap: 18px;             /* separación entre campos */
-  }
-
-  .remember-me {
-    text-align: left;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   /* pastilla */
