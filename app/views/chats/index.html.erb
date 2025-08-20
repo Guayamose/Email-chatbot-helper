@@ -1,24 +1,5 @@
-<%# <nav class="navbar navbar-light">
-  <span class="navbar-brand ms-2">MailAi</span>
-</nav> %>
-<nav class="navbar navbar-expand-sm">
-  <div class="container">
-    <!-- Brand -->
-    <%= link_to "MailAi", chats_path, class: "navbar-brand" %>
-    <!-- Toggler button (shows on mobile) -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <!-- Collapsible links -->
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <%= link_to "Log-out", destroy_user_session_path, class: "nav-link" %>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<%= render "shared/navbar" %>
+
 <%# Contains chat header as well as create button %>
 <div class="container">
   <div class="chats-header">
