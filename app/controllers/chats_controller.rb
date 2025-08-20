@@ -2,6 +2,7 @@ class ChatsController < ApplicationController
   def index
     @chats = Chat.all
     @chat = Chat.new
+    @politeness = Politeness.all
   end
 
   def create
@@ -18,6 +19,7 @@ class ChatsController < ApplicationController
     @chats = Chat.all
     @chat = Chat.find(params[:id])
     @messages = @chat.messages
+    @politeness = Politeness.all
     @message = Message.new
   end
 

@@ -40,9 +40,14 @@
         <%= simple_form_for @chat, url: chats_path do |form| %>
           <%= form.input :title, label: "Chat Title" %>
           <%= form.input :receiver, label: "Email Recipient" %>
-          <%= form.input :politeness_id, collection: Politeness.all,
-                            label_method: :level, value_method: :id,
-                            as: :radio_buttons %>
+          <div class="d-flex justify-content-center my-2">
+            <% Politeness.all.each do |p| %>
+              <%= form.radio_button :politeness_id, p.id, id: "type_#{p.id}", class: "btn-check", autocomplete: "off" %>
+              <%= form.label :politeness_id, for: "type_#{p.id}" do %>
+                <%= image_tag "icons/#{p.level}.png", alt: p.level, class: "type-button-style", size: "24x24" %>
+              <% end %>
+            <% end %>
+          </div>
           <div class="modal-footer">
             <%= form.button :submit, "Create", class: "btn btn-success" %>
           </div>
