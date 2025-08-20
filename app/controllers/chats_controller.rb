@@ -1,15 +1,13 @@
 class ChatsController < ApplicationController
   def index
     @chats = Chat.all
-  end
-
-  def new
     @chat = Chat.new
   end
 
   def create
     @chat = Chat.new(chat_params)
     @chat.user = current_user
+    raise
     if @chat.save
       redirect_to @chat
     else
@@ -27,6 +25,6 @@ class ChatsController < ApplicationController
   private
 
   def chat_params
-    params.require(:chat).permit(:title, :receiver, :subject)
+    params.require(:chat).permit(:title, :receiver, :politeness_id)
   end
 end

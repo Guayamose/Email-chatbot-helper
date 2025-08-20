@@ -4,5 +4,5 @@ class Chat < ApplicationRecord
 
   has_many :messages, dependent: :destroy
 
-  validates :politeness_id, :receiver, :subject, presence: true
+  validates :title, :politeness_id, :receiver, presence: true
 end
