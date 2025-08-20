@@ -1,0 +1,11 @@
+.type-button-style {
+  margin-left: 1rem;
+  cursor: pointer;
+    padding: 1px;
+
+}
+
+.btn-check:checked + label img {
+  border: 2px solid green;
+  border-radius: 4px;
+}

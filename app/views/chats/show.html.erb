@@ -1,28 +1,44 @@
-<!-- Side navigation -->
-<div class="sidenav">
-  <div class="d-flex flex-column justify-content-center">
-    <% @chats.each do |chat| %>
-      <div class="sidenav-item">
-        <%= chat.title %>
-      </div>
-    <% end %>
+<nav class="navbar navbar-expand-sm">
+  <div class="container">
+    <!-- Brand -->
+    <%= link_to "MailAi", chats_path, class: "navbar-brand" %>
+    <!-- Toggler button (shows on mobile) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Collapsible links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <%= link_to "Log-out", destroy_user_session_path, class: "nav-link" %>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
-<!-- Page content -->
+</nav>
 <div class="main">
-  <div class="container text-center">
+  <div class="container">
+    <div class="p-2">
+      <%= link_to "#offcanvasExample",
+      role: "button",
+      "data-bs-toggle": "offcanvas",
+      "aria-controls": "offcanvasExample",
+      class: "btn" do %>
+        <i class="fa-solid fa-magnifying-glass"></i>
+      <% end %>
+    </div>
     <div class="row message-area">
       <% @messages.each do |message| %>
         <div class="row">
           <div class="col mb-2">
-            <% if message.who_sent === 'user' %>
-              <div class="chat-box">
+            <% unless message.who_sent === 'user' %>
+              <div id='<%= "message_#{message.id}"  %>' class="chat-box">
                 <p><%= message.content %></p>
               </div>
             <% end %>
           </div>
           <div class="col">
-            <% unless message.who_sent === 'user' %>
+            <% if message.who_sent === 'user' %>
               <div class="chat-box">
                 <p><%= message.content %></p>
               </div>
@@ -32,18 +48,60 @@
         </div>
       <% end %>
     </div>
-    <div class="d-flex justify-content-between bg-secondary">
-      <div class="bg-primary" style="height:50px">
-      </div>
-      <div class="send-button">
-        <%= simple_form_for [@chat, @message], method: :post do |f| %>
+    <div class="d-flex justify-content-between p-2">
+      <%= simple_form_for [@chat, @message], method: :post, html: { class: 'w-100 text-area-div' } do |f| %>
+        <div class="d-flex align-items-center mb-0">
+          <input type="radio"
+            class="btn-check"
+            name="politeness"
+            id="typeBoss"
+            value='boss'
+            autocomplete="off">
+          <label for="typeBoss">
+            <%= image_tag "icons/devil-standing-up.png", alt: "boss", class: "type-button-style",  size: "24x24" %>
+          </label>
+          <input type="radio"
+            class="btn-check"
+            name="politeness"
+            id="typeCustomer"
+            value='customer'
+            autocomplete="off">
+          <label for="typeCustomer">
+            <%= image_tag "icons/customer.png", alt: "customer", class: "type-button-style", size: "24x24" %>
+          </label>
+          <input type="radio"
+            class="btn-check"
+            name="politeness"
+            value='friend'
+            id="typeFriend"
+            autocomplete="off" checked>
+          <label for="typeFriend">
+            <%= image_tag "icons/beer-mug.png", alt: "friend", class: "type-button-style",  size: "24x24" %>
+          </label>
           <%= f.hidden_field :who_sent, value: "user" %>
-          <%= f.input :content, as: :text, label: "Message" %>
-          <%= f.submit do %>
-            <i class="fa-regular fa-paper-plane"></i>
-          <% end %>
+          <%= f.input :content, as: :text, label: "Message", wrapper: false, input_html: { class: 'text-area-reset text-area-style' }  %>
+          <button type="submit" class="btn text-black">
+            <i class="fa-solid fa-circle-up"></i>
+          </button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body" >
+    <% @messages.each do |message| %>
+      <div data-controller="messagenavbar">
+        <%= link_to "#", class: "nav-link text-dark", data: { action: "click->messagenavbar#messageClick", messageId: message.id } do %>
+          <div class="chat-box mb-2">
+            <p><%= message.content %></p>
+          </div>
         <% end %>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>
