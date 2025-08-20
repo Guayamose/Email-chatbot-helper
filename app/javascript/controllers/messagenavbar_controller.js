@@ -10,10 +10,11 @@ export default class extends Controller {
     const link = e.currentTarget;
     const element = document.getElementById(`message_${link.dataset.messageid}`);
     const messageArea = document.querySelector('.message-area');
-    const rect = element.getBoundingClientRect();
-    const topPositionRelativeToViewport = rect.top;
-    messageArea.scrollTop = topPositionRelativeToViewport;
-    console.log(e.currentTarget);
-  }
+    const offsetTop = element.offsetTop - messageArea.offsetTop;
 
+    messageArea.scrollTop = offsetTop;
+    const offcanvasmessagenavbar = document.getElementById("offcanvasmessagenavbar");
+    const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasmessagenavbar);
+    bsOffcanvas.hide();
+  }
 }
