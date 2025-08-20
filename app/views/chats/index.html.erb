@@ -1,0 +1,47 @@
+<%# <nav class="navbar navbar-light">
+  <span class="navbar-brand ms-2">MailAi</span>
+</nav> %>
+
+<nav class="navbar navbar-expand-sm">
+  <div class="container">
+    <!-- Brand -->
+    <%= link_to "MailAi", chats_path, class: "navbar-brand" %>
+
+    <!-- Toggler button (shows on mobile) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <%= link_to "Log-out", destroy_user_session_path, class: "nav-link" %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="chats-header">
+    <h1>List of chats</h1>
+    <%= link_to '<i class="fa-solid fa-plus"></i>'.html_safe, new_chat_path, class: "btn btn-primary" %>
+  </div>
+
+  <ul class="chats-list">
+    <% @chats.each do |c| %>
+      <li>
+        <div class="chats-cards">
+          <span class="chat-title"><%= "#{c.title} with #{c.receiver}" %></span>
+          <span class="chat-meta">
+            <%= "Politeness: #{c.politeness.level}" %>
+            <%= link_to chat_path(c), method: :delete, data: { confirm: "Are you sure?" } do %>
+              <i class="fa-solid fa-trash"></i>
+            <% end %>
+          </span>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
