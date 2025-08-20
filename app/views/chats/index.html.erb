@@ -1,17 +1,14 @@
 <%# <nav class="navbar navbar-light">
   <span class="navbar-brand ms-2">MailAi</span>
 </nav> %>
-
 <nav class="navbar navbar-expand-sm">
   <div class="container">
     <!-- Brand -->
     <%= link_to "MailAi", chats_path, class: "navbar-brand" %>
-
     <!-- Toggler button (shows on mobile) -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <!-- Collapsible links -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
@@ -22,7 +19,6 @@
     </div>
   </div>
 </nav>
-
 <%# Contains chat header as well as create button %>
 <div class="container">
   <div class="chats-header">
@@ -31,13 +27,14 @@
       <i class="fa-solid fa-plus"></i>
     </button>
   </div>
-
-<%# Creates the list of chats %>
+  <%# Creates the list of chats %>
   <ul class="chats-list">
     <% @chats.each do |c| %>
       <li>
         <div class="chats-cards">
-          <span class="chat-title"><%= "#{c.title} with #{c.receiver}" %></span>
+          <%= link_to chat_path(c), class: 'text-decoration-none text-black'  do%>
+            <span class="chat-title"><%= "#{c.title} with #{c.receiver}" %></span>
+          <% end %>
           <span class="chat-meta">
             <%= "Politeness: #{c.politeness.level}" %>
             <%= link_to chat_path(c), method: :delete, data: { confirm: "Are you sure?" } do %>
@@ -49,31 +46,26 @@
     <% end %>
   </ul>
 </div>
-
 <%# Create Modal (Popup) %>
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-
       <div class="modal-header">
         <h5 class="modal-title" id="createModalLabel">Create New Chat</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-
       <div class="modal-body">
         <%= simple_form_for @chat, url: chats_path do |form| %>
-            <%= form.input :title, label: "Chat Title" %>
-            <%= form.input :receiver, label: "Email Recipient" %>
-            <%= form.input :politeness_id, collection: Politeness.all,
+          <%= form.input :title, label: "Chat Title" %>
+          <%= form.input :receiver, label: "Email Recipient" %>
+          <%= form.input :politeness_id, collection: Politeness.all,
                             label_method: :level, value_method: :id,
                             as: :radio_buttons %>
-
           <div class="modal-footer">
             <%= form.button :submit, "Create", class: "btn btn-success" %>
           </div>
-          <% end %>
+        <% end %>
       </div>
-
     </div>
   </div>
 </div>

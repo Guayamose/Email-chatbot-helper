@@ -79,7 +79,7 @@
             <%= image_tag "icons/beer-mug.png", alt: "friend", class: "type-button-style",  size: "24x24" %>
           </label>
           <%= f.hidden_field :who_sent, value: "user" %>
-          <%= f.input :content, as: :text, label: "Message", wrapper: false, input_html: { class: 'text-area-reset text-area-style' }  %>
+          <%= f.input :content, as: :text, required: false, label: false , wrapper: false, input_html: { class: 'text-area-reset text-area-style' }  %>
           <button type="submit" class="btn text-black">
             <i class="fa-solid fa-circle-up"></i>
           </button>
