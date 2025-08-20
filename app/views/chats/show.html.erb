@@ -17,6 +17,7 @@
           <div class="col mb-2">
             <% unless message.who_sent === 'user' %>
               <div id='<%= "message_#{message.id}"  %>' class="chat-box">
+                <p class="chat-user-text-style"><%= message.who_sent %></p>
                 <%= message.content.html_safe %>
               </div>
             <% end %>
@@ -24,6 +25,7 @@
           <div class="col">
             <% if message.who_sent === 'user' %>
               <div id='<%= "message_#{message.id}"  %>'  class="chat-box">
+                <p class="chat-user-text-style"><%= message.who_sent %></p>
                 <%= message.content.html_safe %>
               </div>
             <% end %>
@@ -35,33 +37,6 @@
     <div class="d-flex justify-content-between p-2">
       <%= simple_form_for [@chat, @message], method: :post, html: { class: 'w-100 text-area-div' } do |f| %>
         <div class="d-flex align-items-center mb-0">
-          <input type="radio"
-            class="btn-check"
-            name="politeness"
-            id="typeBoss"
-            value='boss'
-            autocomplete="off">
-          <label for="typeBoss">
-            <%= image_tag "icons/devil-standing-up.png", alt: "boss", class: "type-button-style",  size: "24x24" %>
-          </label>
-          <input type="radio"
-            class="btn-check"
-            name="politeness"
-            id="typeCustomer"
-            value='customer'
-            autocomplete="off">
-          <label for="typeCustomer">
-            <%= image_tag "icons/customer.png", alt: "customer", class: "type-button-style", size: "24x24" %>
-          </label>
-          <input type="radio"
-            class="btn-check"
-            name="politeness"
-            value='friend'
-            id="typeFriend"
-            autocomplete="off" checked>
-          <label for="typeFriend">
-            <%= image_tag "icons/beer-mug.png", alt: "friend", class: "type-button-style",  size: "24x24" %>
-          </label>
           <%= f.hidden_field :who_sent, value: "user" %>
           <%= f.input :content, as: :text, required: false, label: false , wrapper: false, input_html: { class: 'text-area-reset text-area-style' }  %>
           <button type="submit" class="btn text-black">
@@ -74,7 +49,7 @@
 </div>
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasmessagenavbar" aria-labelledby="offcanvasmessagenavbarLabel">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasmessagenavbarLabel">Offcanvas</h5>
+    <h5 class="offcanvas-title" id="offcanvasmessagenavbarLabel">Old messages</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body" >

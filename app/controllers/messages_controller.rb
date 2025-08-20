@@ -4,6 +4,7 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
     @message.chat = @chat
     if @message.save
+
       prompt = <<-PROMPT
       You are an assistant specialized in professional email communication.
 
