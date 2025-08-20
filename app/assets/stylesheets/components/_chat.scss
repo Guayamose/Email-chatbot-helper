@@ -1,14 +1,39 @@
 .chat-box {
-  background-color: red;
+  background-color: rgb(202, 202, 202);
   border-radius:1rem;
   padding: 1rem;
 }
 
 .message-area {
   overflow-y: auto;
-  height: 85vh;
+  height: 65vh;
 }
 
 .send-button{
   padding: 1rem;
+}
+
+.text-area-reset {
+  border:none;
+  resize:none;
+  outline: none;
+  box-shadow: none;
+  margin-bottom:0;
+}
+.text-area-reset:focus {
+  border:none;
+  resize:none;
+  outline: none;
+  box-shadow: none;
+}
+
+.text-area-style {
+  height: 20px;
+  margin-left: 1rem;
+}
+
+.text-area-div {
+  border-style: solid;
+  border-width: thin;
+  border-radius: 1rem;
 }
