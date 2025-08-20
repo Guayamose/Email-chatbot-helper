@@ -1,5 +1,4 @@
 <%= render "shared/navbar" %>
-
 <%# Contains chat header as well as create button %>
 <div class="container">
   <div class="chats-header">
@@ -14,7 +13,7 @@
       <li data-controller="alert">
         <div class="chats-cards">
           <%= link_to chat_path(c), class: 'text-decoration-none text-black'  do%>
-            <span class="chat-title"><%= "#{c.title} with #{c.receiver}" %></span>
+            <span class="chat-title"><%= "To: #{c.receiver} - Subject: #{c.title}".html_safe %></span>
           <% end %>
           <span class="chat-meta">
             <%= "Politeness: #{c.politeness.level}" %>
