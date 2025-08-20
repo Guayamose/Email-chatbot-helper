@@ -11,16 +11,17 @@
   <%# Creates the list of chats %>
   <ul class="chats-list">
     <% @chats.each do |c| %>
-      <li>
+      <li data-controller="alert">
         <div class="chats-cards">
           <%= link_to chat_path(c), class: 'text-decoration-none text-black'  do%>
             <span class="chat-title"><%= "#{c.title} with #{c.receiver}" %></span>
           <% end %>
           <span class="chat-meta">
             <%= "Politeness: #{c.politeness.level}" %>
-            <%= link_to chat_path(c), method: :delete, data: { confirm: "Are you sure?" } do %>
-              <i class="fa-solid fa-trash"></i>
+            <%= link_to "#", data: { action: 'click->alert#show' }, class: 'text-decoration-none' do %>
+              <i class="fa-solid fa-trash"> </i>
             <% end %>
+            <%= link_to "", chat_path(c), data: { turbo_method: :delete, alert_target: 'link' } %>
           </span>
         </div>
       </li>

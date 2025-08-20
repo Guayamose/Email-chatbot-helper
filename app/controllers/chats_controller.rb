@@ -21,6 +21,13 @@ class ChatsController < ApplicationController
     @message = Message.new
   end
 
+  def destroy
+    @chat = Chat.find(params[:id])
+    @chat.destroy
+
+    redirect_back(fallback_location: chats_path, notice: "Chat excluído!")
+  end
+
   private
 
   def chat_params
