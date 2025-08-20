@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: "pages#home"
+  root to: "devise/sessions#new"
   get "up" => "rails/health#show", as: :rails_health_check
   resources :chats, only: [:index, :show, :create, :destroy] do
     resources :messages, only: [:create]
