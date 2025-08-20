@@ -23,12 +23,16 @@
   </div>
 </nav>
 
+<%# Contains chat header as well as create button %>
 <div class="container">
   <div class="chats-header">
     <h1>List of chats</h1>
-    <%= link_to '<i class="fa-solid fa-plus"></i>'.html_safe, new_chat_path, class: "btn btn-primary" %>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+      <i class="fa-solid fa-plus"></i>
+    </button>
   </div>
 
+<%# Creates the list of chats %>
   <ul class="chats-list">
     <% @chats.each do |c| %>
       <li>
@@ -44,4 +48,32 @@
       </li>
     <% end %>
   </ul>
+</div>
+
+<%# Create Modal (Popup) %>
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Create New Chat</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <%= simple_form_for @chat, url: chats_path do |form| %>
+            <%= form.input :title, label: "Chat Title" %>
+            <%= form.input :receiver, label: "Email Recipient" %>
+            <%= form.input :politeness_id, collection: Politeness.all,
+                            label_method: :level, value_method: :id,
+                            as: :radio_buttons %>
+
+          <div class="modal-footer">
+            <%= form.button :submit, "Create", class: "btn btn-success" %>
+          </div>
+          <% end %>
+      </div>
+
+    </div>
+  </div>
 </div>
