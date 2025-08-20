@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
 
       Guide me into how to write the perfect email depending on who i'm talking to
 
-      show me your version of the email marking the difference between both.
+      show me only your version of the email marking the difference between both(making the difference bold), in a html div.
       PROMPT
 
       @response = RubyLLM.chat.ask(prompt)
