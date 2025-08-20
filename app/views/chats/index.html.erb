@@ -36,8 +36,8 @@
           <span class="chat-title"><%= "#{c.title} with #{c.receiver}" %></span>
           <span class="chat-meta">
             <%= "Politeness: #{c.politeness.level}" %>
-            <%= link_to chat_path(c), method: :delete, data: { confirm: "Are you sure?" } do %>
-              <i class="fa-solid fa-trash"></i>
+            <%= link_to chat_path(c), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+              <i class="fa-solid fa-trash"> </i>
             <% end %>
           </span>
         </div>
