@@ -19,7 +19,7 @@
           </li>
         <% end %>
         <li class="nav-item">
-          <%= link_to "Log-out", destroy_user_session_path, class: "nav-link" %>
+          <%= link_to "Log Out",  destroy_user_session_path, class: "nav-link", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to log out?" } %>
         </li>
       </ul>
     </div>
