@@ -3,7 +3,7 @@ import Swal from "sweetalert2"
 
 // Connects to data-controller="alert"
 export default class extends Controller {
-
+  static targets = ["link"]
   show(e) {
     e.preventDefault()
     console.log("the show is working...");
@@ -17,11 +17,7 @@ export default class extends Controller {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
-          });
+          this.linkTarget.click()
         }
       });
 
