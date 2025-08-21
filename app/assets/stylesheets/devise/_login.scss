@@ -1,11 +1,16 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .box {
     background-color: #344e4152;
     color: #2E2F30;
     text-align: center;
     font-family: arial, sans-serif;
-    margin-top: 8rem !important;
-
   }
+
   .form-inputs {
     display: grid;
     gap: 18px;             /* separación entre campos */
@@ -13,38 +18,54 @@
 
   .remember-me {
     text-align: left;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
+
   }
 
-  /* pastilla */
+  .w-custom {
+    width: 30vw;
+  }
+
+  /* pill */
   .pill-input {
     width: 100%;
-    padding: 16px 24px;
+    padding: 10px 24px;
     border: none;
-    border-radius: 9999px; /* forma de píldora */
-    background: #dadadaff;   /* gris suave */
-    font-weight: 700;
-    color: #444;           /* color del texto */
+    border-radius: 9999px; /*pill shape */
+    background: #dadadaff;   /* light gray */
+    color: #444;           /* ctext color */
     box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
-    margin-top: 16px;
   }
 
-  /* placeholder como título */
+  .margin-0 {
+    margin: 0px !important;
+  }
+
+  .bg-color {
+    background-color: #34623F;
+    color: #fff;
+    border-radius: 9999px;
+    padding: 10px 24px;
+  }
+
+
+  /* placeholder title */
   .pill-input::placeholder {
     color: #8a8a8a;
     opacity: 1;
   }
 
-  /* foco accesible */
+
   .pill-input:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(0,123,255,.25);
     background: #ececec;
   }
+
   .form-label {
     display: none;
   }
+
   .login-signup-button {
   text-decoration: none;
   display: inline-block;

@@ -20,6 +20,27 @@ export default class extends Controller {
           this.linkTarget.click()
         }
       });
+  }
 
+  confirmLogout(event) {
+    event.preventDefault()
+
+    const link = event.currentTarget
+
+    Swal.fire({
+      title: "Logout?",
+      text: "You will need to login again to continue chatting",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes, log out"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        link.removeAttribute("data-action")
+
+        setTimeout(() => {
+          link.click()
+        }, 0)
+      }
+    })
   }
 }
