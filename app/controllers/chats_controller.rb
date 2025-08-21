@@ -32,6 +32,20 @@ class ChatsController < ApplicationController
     redirect_back(fallback_location: chats_path, notice: "Chat deleted!")
   end
 
+  def sendmail
+    @chat = current_user.chats.find(params[:id])
+
+    body_html = params[:message_content].to_s
+    to        = params[:receiver].presence || @chat.receiver
+    subject   = @chat.title.presence || "Message from MailAI"
+
+    ChatMailer.with(to: to, subject: subject, body_html: body_html)
+              .generic_email
+              .deliver_later
+
+    redirect_to @chat, notice: "Email sent to #{to}"
+  end
+
   private
 
   def chat_params
