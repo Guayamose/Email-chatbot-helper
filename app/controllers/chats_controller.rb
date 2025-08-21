@@ -32,6 +32,10 @@ class ChatsController < ApplicationController
     redirect_back(fallback_location: chats_path, notice: "Chat deleted!")
   end
 
+  def sendmail
+    EmailSender.new.call(current_user, params[:message_content], params[:receiver])
+  end
+
   private
 
   def chat_params
