@@ -105,3 +105,12 @@
 .all-page {
   height: 100vh;
 }
+
+.btn-style{
+  opacity: 0.3;
+  transition: 300ms;
+}
+
+.btn-style:hover{
+  opacity: 0.8;
+}

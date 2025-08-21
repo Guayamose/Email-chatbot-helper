@@ -6,7 +6,10 @@
 }
 
 .btn-check:checked + label img {
-  border: 2px solid green;
+  // border: 2px solid green;
+  background-color: $normal-green;
+  color: white;
+  padding: 5px;
   border-radius: 4px;
 }
 
@@ -29,4 +32,20 @@
 .btn-cancel:hover {
   background-color: #ae6a57;
   color: white;
+}
+
+.btn-create-chat {
+  background-color: $normal-green;
+
+  &:hover {
+    background-color: darken($normal-green, 10%);
+  }
+}
+
+.btn-final-create {
+  background-color: $normal-green;
+
+  &:hover {
+    background-color: darken($normal-green, 10%);
+  }
 }

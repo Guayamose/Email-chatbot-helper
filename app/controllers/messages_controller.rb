@@ -1,40 +1,61 @@
 class MessagesController < ApplicationController
   def create
     @chat = current_user.chats.find(params[:chat_id])
-    @message = Message.new(message_params)
-    @message.chat = @chat
+    @message = @chat.messages.new(message_params)
+
     if @message.save
-      prompt = <<-PROMPT
-      You are an assistant specialized in professional email communication.
+      files_text = ExtractText.from_attachments(@message.documents, max_chars: 15_000)
+      politeness_label = @chat.politeness&.level || @chat.politeness&.name || @chat.politeness_id
 
-      I'm new at work and I want to learn how to write this #{@message.content} properly
-      depending on this level of politeness #{@chat.politeness}.
+      prompt = <<~PROMPT
+        You are an assistant specialized in professional email communication.
 
-      Guide me into how to write the perfect email depending on who i'm talking to
+        Rewrite the user's draft into a polished email.
+        Tone politeness level: "#{politeness_label}".
 
-      show me only your version of the email marking the difference between both(making the difference bold), in a html div.
+        Output rules:
+        - Return ONLY your final email wrapped in a single <div>.
+        - Where you changed wording, make the changed phrases **bold** (Markdown).
+        - No extra commentary.
+
+        User draft:
+        #{@message.content}
+
+        #{files_text.present? ? "Additional context from attachments:\n#{files_text}" : ""}
       PROMPT
 
       @response = RubyLLM.chat.ask(prompt)
-      messageAi = Message.new(message_params)
-      messageAi.content = @response.content
-      messageAi.who_sent = "ai"
-      messageAi.chat = @chat
-      @chats = current_user.chats
-      if messageAi.save
-        return redirect_to chat_path(@chat)
+
+      ai_msg = @chat.messages.new(
+        content: sanitize_email_div(@response.content),
+        who_sent: "ai"
+      )
+
+      if ai_msg.save
+        redirect_to chat_path(@chat)
       else
-        return render 'chats/show', status: :unprocessable_content
+        @chats = current_user.chats
+        @messages = @chat.messages.order(:created_at)
+        render "chats/show", status: :unprocessable_entity
       end
-      redirect_to chat_path(@chat)
     else
-      render 'chats/show', status: :unprocessable_content
+      @chats = current_user.chats
+      @messages = @chat.messages.order(:created_at)
+      render "chats/show", status: :unprocessable_entity
     end
   end
 
   private
 
+  def sanitize_email_div(html)
+    helpers.sanitize(
+      html.to_s,
+      tags: %w[div p br strong b em ul ol li a],
+      attributes: %w[href]
+    )
+  end
+
   def message_params
-    params.require(:message).permit(:content, :who_sent)
+    params.require(:message).permit(:content, :who_sent, documents: [])  # <= allow files
   end
 end

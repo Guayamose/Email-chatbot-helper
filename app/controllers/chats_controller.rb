@@ -20,7 +20,7 @@ class ChatsController < ApplicationController
   def show
     @chats = current_user.chats
     @chat = current_user.chats.find(params[:id])
-    @messages = @chat.messages
+    @messages = @chat.messages.order(:created_at)
     @politeness = Politeness.all
     @message = Message.new
   end
