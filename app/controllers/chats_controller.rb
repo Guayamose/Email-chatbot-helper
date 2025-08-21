@@ -33,7 +33,17 @@ class ChatsController < ApplicationController
   end
 
   def sendmail
-    EmailSender.new.call(current_user, params[:message_content], params[:receiver])
+    @chat = current_user.chats.find(params[:id])
+
+    body_html = params[:message_content].to_s
+    to        = params[:receiver].presence || @chat.receiver
+    subject   = @chat.title.presence || "Message from MailAI"
+
+    ChatMailer.with(to: to, subject: subject, body_html: body_html)
+              .generic_email
+              .deliver_later
+
+    redirect_to @chat, notice: "Email sent to #{to}"
   end
 
   private
