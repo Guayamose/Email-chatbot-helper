@@ -2,6 +2,7 @@
   background-color: rgb(223, 223, 223);
   border-radius:1rem;
   padding: 1rem;
+  position: relative;
 }
 
 .chat-box-user{
@@ -61,4 +62,10 @@
 
 .date-text{
   font-size: 10px;
+}
+
+.mail-btn {
+  position:absolute;
+  top: 5px;
+  right: 5px;
 }
