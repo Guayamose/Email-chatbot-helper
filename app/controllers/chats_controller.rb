@@ -11,7 +11,9 @@ class ChatsController < ApplicationController
     if @chat.save
       redirect_to @chat
     else
-      render :new
+      @chats = Chat.all
+      @politeness = Politeness.all
+      render "index"
     end
   end
 
