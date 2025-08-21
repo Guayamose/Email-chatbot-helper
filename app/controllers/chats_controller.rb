@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
   def index
-    @chats = Chat.all
+    @chats = current_user.chats
     @chat = Chat.new
     @politeness = Politeness.all
   end
@@ -11,23 +11,29 @@ class ChatsController < ApplicationController
     if @chat.save
       redirect_to @chat
     else
-      render :new
+      @chats = Chat.all
+      @politeness = Politeness.all
+      render "index"
     end
   end
 
   def show
-    @chats = Chat.all
-    @chat = Chat.find(params[:id])
+    @chats = current_user.chats
+    @chat = current_user.chats.find(params[:id])
     @messages = @chat.messages
     @politeness = Politeness.all
     @message = Message.new
   end
 
   def destroy
-    @chat = Chat.find(params[:id])
+    @chat = current_user.chats.find(params[:id])
     @chat.destroy
 
-    redirect_back(fallback_location: chats_path, notice: "Chat excluído!")
+    redirect_back(fallback_location: chats_path, notice: "Chat deleted!")
+  end
+
+  def sendmail
+    EmailSender.new.call(current_user, params[:message_content], params[:receiver])
   end
 
   private

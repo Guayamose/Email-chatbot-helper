@@ -21,6 +21,12 @@
                 <div id='<%= "message_#{message.id}"  %>' class="chat-box">
                   <p class="chat-user-text-style">MailAI | To: <%= message.chat.receiver %></p>
                   <%= message.content.html_safe %>
+                  <%= button_to sendmail_chat_path(@chat),
+                    method: :post,
+                    class: "btn mail-btn",
+                    params: { message_content: message.content, receiver: message.chat.receiver } do %>
+                    <i class="fa-solid fa-envelope"></i>
+                  <% end %>
                 </div>
               <% end %>
             </div>
