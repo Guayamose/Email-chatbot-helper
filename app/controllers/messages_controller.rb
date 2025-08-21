@@ -2,6 +2,7 @@ class MessagesController < ApplicationController
   def create
     @chat = current_user.chats.find(params[:chat_id])
     @message = Message.new(message_params)
+    @message.who_sent = "user"
     @message.chat = @chat
     if @message.save
       prompt = <<-PROMPT

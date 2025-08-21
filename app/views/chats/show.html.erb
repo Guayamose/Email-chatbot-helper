@@ -18,7 +18,7 @@
           <div class="row">
             <div class="col mb-2">
               <% unless message.who_sent === 'user' %>
-                <div id='<%= "message_#{message.id}"  %>' class="chat-box">
+                <div id='<%= "message_#{message.id}"  %>' class="chat-box" data-controller="auto-scroll">
                   <p class="chat-user-text-style">MailAI | To: <%= message.chat.receiver %></p>
                   <%= message.content.html_safe %>
                   <%= button_to sendmail_chat_path(@chat),
