@@ -9,15 +9,21 @@
   list-style: none;
   padding: 0;
 }
+
 .chats-cards {
   display: flex;
   justify-content: space-between;
   padding: 16px;
-  border: 1px solid black;
+  border: 1px solid rgb(107, 107, 107);
   margin: 1rem auto;
   text-decoration: none;
   list-style: none;
   border-radius: 1rem;
+  transition: 300ms;
+}
+
+.chats-cards:hover {
+  scale: 1.01;
 }
 
 .form-label {
