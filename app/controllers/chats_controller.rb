@@ -6,17 +6,16 @@ class ChatsController < ApplicationController
   end
 
   def create
-  @chat = Chat.new(chat_params)
-  @chat.user = current_user
-  if @chat.save
-    redirect_to @chat
-  else
--   @chats = Chat.all
-+   @chats = current_user.chats
-    @politeness = Politeness.all
-    render "index"
+    @chat = Chat.new(chat_params)
+    @chat.user = current_user
+    if @chat.save
+      redirect_to @chat
+    else
+      @chats = Chat.all
+      @politeness = Politeness.all
+      render "index"
+    end
   end
-end
 
   def show
     @chats = current_user.chats
@@ -34,21 +33,13 @@ end
   end
 
   def sendmail
-    @chat = current_user.chats.find(params[:id])
+    message = params[:message_content]
+    receiver = params[:receiver]
+    user = params[:user]
+    subject = params[:subject]
 
-    body_html = helpers.sanitize(
-     params[:message_content].to_s,
-     tags: %w[div p br strong b em ul ol li a],
-     attributes: %w[href]
-    )
-    to        = params[:receiver].presence || @chat.receiver
-    subject   = @chat.title.presence || "Message from MailAI"
-
-    ChatMailer.with(to: to, subject: subject, body_html: body_html)
-              .generic_email
-              .deliver_later
-
-    redirect_to @chat, notice: "Email sent to #{to}"
+    render json: { status: "ok", message: message, receiver: receiver }
+    EmailSender.new.call(user, message, receiver, subject)
   end
 
   private

@@ -1,7 +1,7 @@
 class UserMailer < ApplicationMailer
-  def create_email(user, body, receiver)
-    mail(to: receiver, from: user.email, subject: "Bem-vindo ao app!") do |format|
-      format.html { render html: body.html_safe }
+  def create_email(user, body, receiver, subject)
+    mail(to: receiver, from: user, subject: subject) do |format|
+      format.text { render plain: body }
     end
   end
 end
