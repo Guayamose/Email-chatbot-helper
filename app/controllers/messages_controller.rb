@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
   def create
-    @chat = Chat.find(params[:chat_id])
+    @chat = current_user.chats.find(params[:chat_id])
     @message = Message.new(message_params)
     @message.chat = @chat
     if @message.save
@@ -20,7 +20,7 @@ class MessagesController < ApplicationController
       messageAi.content = @response.content
       messageAi.who_sent = "ai"
       messageAi.chat = @chat
-      @chats = Chat.all
+      @chats = current_user.chats
       if messageAi.save
         return redirect_to chat_path(@chat)
       else
@@ -31,6 +31,8 @@ class MessagesController < ApplicationController
       render 'chats/show', status: :unprocessable_content
     end
   end
+
+  private
 
   def message_params
     params.require(:message).permit(:content, :who_sent)
