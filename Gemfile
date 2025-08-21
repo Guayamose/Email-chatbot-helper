@@ -53,8 +53,6 @@ gem 'devise'
 gem 'faker'
 gem "ruby_llm"
 gem "dotenv-rails"
-gem "pdf-reader"
-gem "docx"
 
 group :development, :test do
   gem "dotenv-rails"
@@ -78,3 +76,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "pdf-reader", "~> 2.15"
+
+gem "docx", "~> 0.9.1"

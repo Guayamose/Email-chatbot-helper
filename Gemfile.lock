@@ -381,13 +381,13 @@ DEPENDENCIES
   capybara
   debug
   devise
-  docx
+  docx (~> 0.9.1)
   dotenv-rails
   faker
   font-awesome-sass (~> 6.1)
   importmap-rails
   jbuilder
-  pdf-reader
+  pdf-reader (~> 2.15)
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.1.5, >= 7.1.5.2)
