@@ -11,7 +11,7 @@ export default class extends Controller {
     console.log("Okay seaching here");
     this.searchchatsTargets.forEach((chat) => {
       const receiver = chat.getAttribute("data-key");
-      const isMatch = receiver.includes(searchTerm);
+      const isMatch = receiver.startsWith(searchTerm);
       chat.style.display = isMatch ? "" : "none";
     })
   }
