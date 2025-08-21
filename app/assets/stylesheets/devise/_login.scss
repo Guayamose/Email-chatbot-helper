@@ -5,6 +5,7 @@
 }
 
 .box {
+
     background-color: #344e4152;
     color: #2E2F30;
     text-align: center;
@@ -48,6 +49,10 @@
     padding: 10px 24px;
   }
 
+  .bg-color:hover {
+    background-color: #2e5136;
+  }
+
 
   /* placeholder title */
   .pill-input::placeholder {
@@ -86,8 +91,17 @@
   margin-bottom: 1rem;         /* mb-3 */
   cursor: pointer;
   }
+
   .login-signup-button:hover {
   color: #fff;
   background-color: #585858ff;   /* btn-primary */
   border-color: #5c5c5cff;       /* btn-primary */
   }
+
+.sm-font {
+  font-size: .8rem;
+}
+
+.all-page {
+  height: 100vh;
+}
