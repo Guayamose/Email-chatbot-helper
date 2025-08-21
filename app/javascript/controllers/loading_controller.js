@@ -4,10 +4,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["area"]
 
-  connect() {
-    console.log("connected");
-
-  }
   start() {
     console.log("start");
 

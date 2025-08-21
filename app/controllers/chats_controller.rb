@@ -33,7 +33,13 @@ class ChatsController < ApplicationController
   end
 
   def sendmail
-    EmailSender.new.call(current_user, params[:message_content], params[:receiver])
+    message = params[:message_content]
+    receiver = params[:receiver]
+    user = params[:user]
+    subject = params[:subject]
+
+    render json: { status: "ok", message: message, receiver: receiver }
+    EmailSender.new.call(user, message, receiver, subject)
   end
 
   private
