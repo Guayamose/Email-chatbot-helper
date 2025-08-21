@@ -12,22 +12,23 @@
         <% end %>
       <% end %>
     </div>
-    <div class="row message-area" data-loading-target="area">
+    <div class="row message-area" data-loading-target="area" data-controller="email-modal">
       <% if @messages.any? %>
         <% @messages.each do |message| %>
-          <div class="row">
+          <div class="row" >
             <div class="col mb-2">
-              <% unless message.who_sent == 'user' %>
-                <div id='<%= "message_#{message.id}"  %>' class="chat-box" data-controller="auto-scroll">
+              <% unless message.who_sent === 'user' %>
+                <div id='<%= "message_#{message.id}" %>' class="chat-box" >
                   <p class="chat-user-text-style">MailAI | To: <%= message.chat.receiver %></p>
-                     <%= sanitize(message.content.to_s,
-                          tags: %w[div p br strong b em ul ol li a],
-                          attributes: %w[href]) %>
-
-                  <%= button_to sendmail_chat_path(@chat),
+                  <%= message.content.html_safe %>
+                  <%= button_to sendmail_path,
                     method: :post,
                     class: "btn mail-btn",
-                    params: { message_content: message.content, receiver: message.chat.receiver } do %>
+                    params: { message_content: message.content },
+                    data: { action: "click->email-modal#open", message: message.content,
+                      receiver: message.chat.receiver,
+                      user: current_user.email,
+                      subject: message.chat.title  } do %>
                     <i class="fa-solid fa-envelope"></i>
                   <% end %>
                 </div>
@@ -50,26 +51,59 @@
           <%= image_tag "empty.png", class: 'empty-image'%>
         </div>
       <% end %>
+      <%# Email modal %>
+      <div data-email-modal-target="modal" class="modal modal-lg" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body modal-email">
+              <div class="container">
+                <div class="row">
+                  <div data-email-modal-target="user">
+                  </div>
+                  <div data-email-modal-target="receiver">
+                  </div>
+                  <div data-email-modal-target="subject">
+                  </div>
+                  <hr>
+                  <div class="col">
+                    <h5 class="text-center">EmailAI</h5>
+                    <hr>
+                    <p data-email-modal-target="message"></p>
+                  </div>
+                  <div class="col">
+                    <h5 class="text-center">To be sent:</h5>
+                    <hr>
+                    <textarea class="form-control modal-email-textarea" data-email-modal-target="textarea"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-confirm" data-action="click->email-modal#confirm">Send Email</button>
+              <button class="btn btn-cancel" data-action="click->email-modal#close">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     
    <div class="d-flex justify-content-between p-2">
 
      <%= simple_form_for [@chat, @message], method: :post,
            html: { class: 'w-100 text-area-div', controller: 'loading', multipart: true } do |f| %>
-       <div class="d-flex align-items-center mb-0 gap-2 w-100">
-         <%= f.hidden_field :who_sent, value: "user" %>
-         <%= f.input :content,
+        <div class="d-flex align-items-center mb-0 gap-2 w-100">
+          <%= f.hidden_field :who_sent, value: "user" %>
+          <%= f.input :content,
                      as: :text,
                      required: false,
                      label: false,
                      wrapper: false,
                      input_html: { class: 'text-area-reset text-area-style', placeholder: "Write your draft…" } %>
-
-         <!-- File input (multiple) -->
-         <div class="d-flex align-items-center">
-           <label class="btn btn-outline-secondary mb-0">
-             <i class="fa-solid fa-paperclip"></i>
-             <%= f.input :documents,
+          <!-- File input (multiple) -->
+          <div class="d-flex align-items-center">
+            <label class="btn btn-outline-secondary mb-0">
+              <i class="fa-solid fa-paperclip"></i>
+              <%= f.input :documents,
                          as: :file,
                          label: false,
                          input_html: {
@@ -78,15 +112,14 @@
                            accept: ".txt,.pdf,.docx,.csv,.md",
                            class: "d-none"
                          } %>
-           </label>
-         </div>
-
-         <button type="submit" class="btn text-black" data-action="click->loading#start">
-           <i class="fa-solid fa-circle-up"></i>
-         </button>
-       </div>
-     <% end %>
-   </div>
+            </label>
+          </div>
+          <button type="submit" class="btn text-black" data-action="click->loading#start">
+            <i class="fa-solid fa-circle-up"></i>
+          </button>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasmessagenavbar" aria-labelledby="offcanvasmessagenavbarLabel">

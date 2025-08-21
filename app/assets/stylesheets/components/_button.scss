@@ -13,6 +13,27 @@
   border-radius: 4px;
 }
 
+.btn-confirm{
+  background-color: #607466;
+  color:white;
+}
+
+.btn-cancel {
+  background-color: #D7816A;
+  color: white;
+}
+
+
+.btn-confirm:hover{
+  background-color: #445349;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background-color: #ae6a57;
+  color: white;
+}
+
 .btn-create-chat {
   background-color: $normal-green;
 

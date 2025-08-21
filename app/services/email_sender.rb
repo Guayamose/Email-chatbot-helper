@@ -1,5 +1,5 @@
 class EmailSender
-  def call(user, body, receiver)
-    UserMailer.create_email(user, body, receiver).deliver_now
+  def call(user, body, receiver, subject)
+    UserMailer.create_email(user, body, receiver, subject).deliver_now
   end
 end

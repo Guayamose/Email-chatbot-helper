@@ -19,6 +19,6 @@ Rails.application.routes.draw do
       post :sendmail   # <- this creates sendmail_chat_path(@chat)
     end
     resources :messages, only: [:create]
-    post :sendmail, on: :member
   end
+  post '/sendmail', to: 'chats#sendmail', as: 'sendmail'
 end
