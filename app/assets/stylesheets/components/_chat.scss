@@ -1,5 +1,11 @@
 .chat-box {
-  background-color: rgb(202, 202, 202);
+  background-color: rgb(223, 223, 223);
+  border-radius:1rem;
+  padding: 1rem;
+}
+
+.chat-box-user{
+  background-color: rgb(193, 193, 193);
   border-radius:1rem;
   padding: 1rem;
 }
@@ -47,4 +53,12 @@
   border-style: solid;
   border-width: thin;
   border-radius: 1rem;
+}
+
+.empty-image{
+  max-height: 320px;
+}
+
+.date-text{
+  font-size: 10px;
 }
