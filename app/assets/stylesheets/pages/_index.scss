@@ -1,2 +1,10 @@
 // Import page-specific CSS files here.
 @import "home";
+
+.chats-cards {
+  background-color: $cool-gray;
+}
+
+.fa-eraser {
+ color: $mid-green;
+}
