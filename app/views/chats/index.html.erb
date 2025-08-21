@@ -1,18 +1,20 @@
 <%= render "shared/navbar" %>
 <%# Contains chat header as well as create button %>
-<div class="container">
+<div class="container" data-controller="chatfilter">
   <div class="chats-header">
     <h1>List of chats</h1>
     <button type="button" class="btn btn-create-chat" data-bs-toggle="modal" data-bs-target="#createModal">
       <i class="fa-solid fa-plus"></i>
     </button>
   </div>
+  <label for="search-filter">Search</label>
+  <input type="text" name="Search Filter" id="search-filter" data-chatfilter-target="searchbar" data-action="input->chatfilter#filter"/>
   <%# Creates the list of chats %>
   <ul class="chats-list">
     <% @chats.each do |c| %>
       <li data-controller="alert">
-        <div class="chats-cards">
-          <%= link_to chat_path(c), class: 'text-decoration-none text-black'  do%>
+        <div class="chats-cards" data-chatfilter-target="searchchats" data-key="<%= c.receiver.downcase %>">
+          <%= link_to chat_path(c), class: 'text-decoration-none text-black' do %>
             <span class="chat-title"><%= "To: #{c.receiver} - Subject: #{c.title}".html_safe %></span>
           <% end %>
           <span class="chat-meta">
