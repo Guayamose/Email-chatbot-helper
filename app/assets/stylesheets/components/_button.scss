@@ -6,7 +6,10 @@
 }
 
 .btn-check:checked + label img {
-  border: 2px solid green;
+  // border: 2px solid green;
+  background-color: $normal-green;
+  color: white;
+  padding: 5px;
   border-radius: 4px;
 }
 
