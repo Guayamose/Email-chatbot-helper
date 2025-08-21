@@ -31,6 +31,8 @@ export default class extends Controller {
       title: "Logout?",
       text: "You will need to login again to continue chatting",
       icon: "question",
+      confirmButtonColor: "#607466",
+      cancelButtonColor: "#D7816A",
       showCancelButton: true,
       confirmButtonText: "Yes, log out"
     }).then((result) => {
