@@ -53,8 +53,6 @@ gem 'devise'
 gem 'faker'
 gem "ruby_llm"
 gem "dotenv-rails"
-gem "pdf-reader"
-gem "docx"
 
 group :development, :test do
   gem "dotenv-rails"
