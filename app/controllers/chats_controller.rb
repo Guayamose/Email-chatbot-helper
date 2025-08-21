@@ -6,21 +6,22 @@ class ChatsController < ApplicationController
   end
 
   def create
-    @chat = Chat.new(chat_params)
-    @chat.user = current_user
-    if @chat.save
-      redirect_to @chat
-    else
-      @chats = Chat.all
-      @politeness = Politeness.all
-      render "index"
-    end
+  @chat = Chat.new(chat_params)
+  @chat.user = current_user
+  if @chat.save
+    redirect_to @chat
+  else
+-   @chats = Chat.all
++   @chats = current_user.chats
+    @politeness = Politeness.all
+    render "index"
   end
+end
 
   def show
     @chats = current_user.chats
     @chat = current_user.chats.find(params[:id])
-    @messages = @chat.messages
+    @messages = @chat.messages.order(:created_at)
     @politeness = Politeness.all
     @message = Message.new
   end
@@ -35,7 +36,11 @@ class ChatsController < ApplicationController
   def sendmail
     @chat = current_user.chats.find(params[:id])
 
-    body_html = params[:message_content].to_s
+    body_html = helpers.sanitize(
+     params[:message_content].to_s,
+     tags: %w[div p br strong b em ul ol li a],
+     attributes: %w[href]
+    )
     to        = params[:receiver].presence || @chat.receiver
     subject   = @chat.title.presence || "Message from MailAI"
 

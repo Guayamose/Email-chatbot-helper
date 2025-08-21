@@ -17,7 +17,7 @@
         <% @messages.each do |message| %>
           <div class="row">
             <div class="col mb-2">
-              <% unless message.who_sent === 'user' %>
+              <% unless message.who_sent == 'user' %>
                 <div id='<%= "message_#{message.id}"  %>' class="chat-box" data-controller="auto-scroll">
                   <p class="chat-user-text-style">MailAI | To: <%= message.chat.receiver %></p>
                      <%= sanitize(message.content.to_s,
@@ -34,7 +34,7 @@
               <% end %>
             </div>
             <div class="col">
-              <% if message.who_sent === 'user' %>
+              <% if message.who_sent == 'user' %>
                 <div id='<%= "message_#{message.id}"  %>'  class="chat-box-user">
                   <p class="chat-user-text-style"><%= current_user.email %></p>
                   <%= simple_format(message.content) %>
@@ -95,7 +95,7 @@
   </div>
   <div class="offcanvas-body" >
     <% @messages.each do |message| %>
-      <% if message.who_sent === 'user' %>
+      <% if message.who_sent == 'user' %>
         <div data-controller="messagenavbar">
           <%= link_to "#", class: "nav-link text-dark", data: { action: "click->messagenavbar#messageClick", messageId: message.id } do %>
             <div class="chat-box mb-2">
@@ -121,4 +121,3 @@
     <% end %>
   </div>
 </div>
-

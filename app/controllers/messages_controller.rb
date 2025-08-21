@@ -1,18 +1,12 @@
 class MessagesController < ApplicationController
   def create
     @chat = current_user.chats.find(params[:chat_id])
-
-    # Build the user message under this chat (includes any attached files)
     @message = @chat.messages.new(message_params)
 
     if @message.save
-      # Extract text from attachments (cap length to protect tokens)
       files_text = ExtractText.from_attachments(@message.documents, max_chars: 15_000)
-
-      # Make politeness readable (avoid interpolating the AR object itself)
       politeness_label = @chat.politeness&.level || @chat.politeness&.name || @chat.politeness_id
 
-      # Compose a tight prompt
       prompt = <<~PROMPT
         You are an assistant specialized in professional email communication.
 
@@ -30,10 +24,8 @@ class MessagesController < ApplicationController
         #{files_text.present? ? "Additional context from attachments:\n#{files_text}" : ""}
       PROMPT
 
-      # Call the LLM
       @response = RubyLLM.chat.ask(prompt)
 
-      # Save AI reply
       ai_msg = @chat.messages.new(
         content: sanitize_email_div(@response.content),
         who_sent: "ai"
@@ -43,19 +35,18 @@ class MessagesController < ApplicationController
         redirect_to chat_path(@chat)
       else
         @chats = current_user.chats
-        @messages = @chat.messages.reload
+        @messages = @chat.messages.order(:created_at)
         render "chats/show", status: :unprocessable_entity
       end
     else
       @chats = current_user.chats
-      @messages = @chat.messages.reload
+      @messages = @chat.messages.order(:created_at)
       render "chats/show", status: :unprocessable_entity
     end
   end
 
   private
 
-  # Allow a safe subset of HTML so you can render the returned <div> without XSS
   def sanitize_email_div(html)
     helpers.sanitize(
       html.to_s,
@@ -65,6 +56,6 @@ class MessagesController < ApplicationController
   end
 
   def message_params
-    params.require(:message).permit(:content, :who_sent, documents: [])
+    params.require(:message).permit(:content, :who_sent, documents: [])  # <= allow files
   end
 end
