@@ -35,17 +35,18 @@
 }
 
 .btn-create-chat {
-  background-color: $normal-green;
+  background-color: $clear-green;
+  padding: 4px 16px;
 
   &:hover {
-    background-color: darken($normal-green, 10%);
+    background-color: darken($clear-green, 10%);
   }
 }
 
 .btn-final-create {
-  background-color: $normal-green;
+  background-color: $clear-green;
 
   &:hover {
-    background-color: darken($normal-green, 10%);
+    background-color: darken($clear-green, 10%);
   }
 }
