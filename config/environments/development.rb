@@ -53,25 +53,14 @@ Rails.application.configure do
   #   enable_starttls_auto: true
   # }
 
-  # CONFIG FOR USING MAILTRAP SERVER
   config.action_mailer.smtp_settings = {
-    user_name: 'api',
-    password: ENV['MAILTRAP_API'],
-    address: 'live.smtp.mailtrap.io',
-    host: 'live.smtp.mailtrap.io',
-    port: '587',
+    user_name: ENV["SMTP_USER"],
+    password: ENV["SMTP_PASSWORD"],
+    address: 'sandbox.smtp.mailtrap.io',
+    host: 'sandbox.smtp.mailtrap.io',
+    port: '2525',
     authentication: :login
   }
-
-  # CONFIG FOR USING MAILTRAP LOCAL
-  # config.action_mailer.smtp_settings = {
-  #   user_name: ENV["SMTP_USER"],
-  #   password: ENV["SMTP_PASSWORD"],
-  #   address: 'sandbox.smtp.mailtrap.io',
-  #   host: 'sandbox.smtp.mailtrap.io',
-  #   port: '2525',
-  #   authentication: :login
-  # }
 
 
   config.action_mailer.default_url_options = { host: "smtp.imitate.email", port: 587 }

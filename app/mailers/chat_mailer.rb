@@ -10,4 +10,3 @@ class ChatMailer < ApplicationMailer
     end
   end
 end
-
