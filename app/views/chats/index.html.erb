@@ -2,12 +2,14 @@
 <%# Contains chat header as well as create button %>
 <div class="container" data-controller="chatfilter">
   <div class="chats-header">
-    <h1>List of chats</h1>
+    <h1>Chat List</h1>
     <button type="button" class="btn btn-create-chat" data-bs-toggle="modal" data-bs-target="#createModal">
       <i class="fa-solid fa-plus"></i>
     </button>
   </div>
-  <label for="search-filter">Search</label>
+  <label for="search-filter" class="me-2">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </label>
   <input type="text" name="Search Filter" id="search-filter" data-chatfilter-target="searchbar" data-action="input->chatfilter#filter"/>
   <%# Creates the list of chats %>
   <ul class="chats-list">
@@ -15,11 +17,11 @@
       <li data-controller="alert">
         <div class="chats-cards" data-chatfilter-target="searchchats" data-key="<%= c.receiver.downcase %>">
           <%= link_to chat_path(c), class: 'text-decoration-none text-black' do %>
-            <span class="chat-title"><%= "To: #{c.receiver} - Subject: #{c.title}".html_safe %></span>
+            <span class="chat-title"><%= sanitize("<strong>To:</strong> #{c.receiver} - <strong>Subject:</strong> #{c.title}") %></span>
           <% end %>
           <span class="chat-meta">
-            <%= "Politeness: #{c.politeness.level}" %>
-            <%= link_to "#", data: { action: 'click->alert#show' }, class: 'text-decoration-none' do %>
+            <%= sanitize("<strong>#{c.politeness.level}</strong> - ") %>
+            <%= link_to "#", data: { action: 'click->alert#show', controller: "tooltip", bs_toggle: "tooltip", bs_title: "Delete" }, class: 'text-decoration-none' do %>
               <i class="fa-solid fa-eraser"></i>
             <% end %>
             <%= link_to "", chat_path(c), data: { turbo_method: :delete, alert_target: 'link' } %>

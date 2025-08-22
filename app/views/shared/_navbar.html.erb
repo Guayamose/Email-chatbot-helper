@@ -1,7 +1,10 @@
 <nav class="navbar navbar-expand-sm">
   <div class="container">
     <!-- Brand -->
-    <%= link_to "MailAi", chats_path, class: "navbar-brand" %>
+    <%= link_to chats_path, class: "navbar-brand d-flex" do %>
+      <p class="mb-0 me-2">MailAi</p>
+      <%= image_tag "icons/MailAi-Logo.png", class: "mail-logo" %>
+    <% end %>
     <!-- Toggler button (shows on mobile) -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>

@@ -29,3 +29,21 @@
 .form-label {
   display: block !important;
 }
+
+.chats-cards {
+  background-color: $cool-gray;
+}
+
+.fa-eraser {
+ color: $mid-green;
+}
+
+.fa-magnifying-glass {
+  color: $mid-green;
+}
+
+#search-filter {
+  border: 1px solid $mid-green;
+  border-radius: 1rem;
+  padding: 0 12px;
+}
