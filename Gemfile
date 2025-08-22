@@ -51,7 +51,7 @@ gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
 gem 'devise'
 gem 'faker'
-gem "ruby_llm"
+gem "ruby_llm", git: 'https://github.com/SuzukiRyuichiro/ruby_llm.git'
 gem "dotenv-rails"
 gem "cloudinary"
 
