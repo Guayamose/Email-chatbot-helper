@@ -40,8 +40,12 @@ export default class extends Controller {
       body: formData
     })
     .then(response => response.json())
-    .then(
-      this.close()
+    .then(() => {
+        this.close()
+        const toastLiveExample = document.getElementById("liveToast");
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+        toastBootstrap.show();
+      }
     )
     .catch(e => console.error(e))
   }
