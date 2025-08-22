@@ -76,12 +76,12 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
-    address:              "smtp.imitate.email",
-    port:                 587,
-    user_name:            ENV["SMTP_USER"],
-    password:             ENV["SMTP_PASSWORD"],
-    authentication:       "plain",
-    enable_starttls_auto: true
+    user_name: ENV["SMTP_USER"],
+    password: ENV["SMTP_PASSWORD"],
+    address: 'live.sandbox.smtp.mailtrap.io',
+    host: 'live.sandbox.smtp.mailtrap.io',
+    port: '2525',
+    authentication: :login
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
