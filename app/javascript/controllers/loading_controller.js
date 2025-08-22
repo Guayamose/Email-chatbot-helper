@@ -3,6 +3,10 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="loading"
 export default class extends Controller {
   static targets = ["area"]
+  connect() {
+    console.log('connected1312');
+
+  }
 
   start() {
     console.log("start");
