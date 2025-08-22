@@ -6,24 +6,33 @@ class MessagesController < ApplicationController
     if @message.save
       files_text = ExtractText.from_attachments(@message.documents, max_chars: 15_000)
       politeness_label = @chat.politeness&.level || @chat.politeness&.name || @chat.politeness_id
+      receiver_label = @chat.receiver
 
       prompt = <<~PROMPT
         You are an assistant specialized in professional email communication.
 
-        Rewrite the user's draft into a polished email.
-        Tone politeness level: "#{politeness_label}".
+        Task:
+        - Read the email received from "#{receiver_label}".
+        - Write a polished, ready-to-send reply to that email.
+        - Match the language of the received email.
+        - Tone politeness level: "#{politeness_label}".
 
-        Output rules:
-        - Return ONLY your final email wrapped in a single <div>.
-        - Where you changed wording, make the changed phrases **bold** (Markdown).
-        - No extra commentary.
+        Output rules (STRICT):
+        - Return ONLY one HTML element: a single <div> containing the reply.
+        - Take into account the additional context from attachments (if any).
+        - Inside the <div>, format the reply as a professional email using HTML:
+          • Wrap each paragraph in <p style="margin:0 0 12px;"> ... </p>.
+          • Start with an appropriate greeting in its own <p>.
+          • Use short paragraphs (1–4 sentences each).
+          • If helpful, include a concise bullet list with <ul><li>...</li></ul>.
+          • End with a polite closing and signature placeholder in their own <p> and use <br> for line breaks in the signature.
+        - No Markdown, no quotes of the original email, no explanations, no extra text outside the <div>.
 
-        User draft:
+        Email received:
         #{@message.content}
 
-        #{files_text.present? ? "Additional context from attachments:\n#{files_text}" : ""}
+        #{files_text.present? ? "Additional context (from attachments):\n#{files_text}" : ""}
       PROMPT
-
       @response = RubyLLM.chat.ask(prompt)
 
       ai_msg = @chat.messages.new(
