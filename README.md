@@ -1,3 +1,19 @@
-Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/rails-templates), created by the [Le Wagon coding bootcamp](https://www.lewagon.com) team.
-Off: heroku ps:scale web=0
-On: heroku ps:scale web=1
+## Run Locally
+
+Log in into heroku
+
+```bash
+  heroku login
+```
+
+Stop runing
+
+```bash
+  heroku ps:scale web=0 -a email-chatbot-helper
+```
+
+Run it again
+
+```bash
+  heroku ps:scale web=1 -a email-chatbot-helper
+```
